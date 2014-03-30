@@ -1,0 +1,34 @@
+
+@media screen and (min-width: 1000px) {
+  header#header {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 600px;
+    height: 100%;
+    background-color: black;
+  }
+  section#content {
+    padding: 0 0 0 600px;
+    div#properties {
+      .item {
+        width:100%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  body {
+    max-width: 1400px;
+  }
+
+  section#content {
+    div#properties {
+      .item {
+        float:left;
+        width:50%;
+      }
+    }
+  }
+}

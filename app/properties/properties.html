@@ -1,0 +1,20 @@
+<section id="properties" ng-show="showProperties">
+
+    <div ng-hide="results.properties.length" class="message">No Match Found:: {{results.properties.length}}</div>
+
+    <div class="item" ng-repeat="property in results.properties" >
+        <div class="inner">
+            <div class="img-container"><img ng-src="assets/img/properties/{{property.id}}/{{property.images[0]}}"></div>
+            <div class="info" ui-sref="app.property">
+                <span class="title">{{property.title}}</span>
+                </div>
+            <div class="details">
+                <div class="agency">
+                    <img ng-src="assets/img/agencies/{{property.agency.id}}/{{property.agency.logo}}" height="30px">
+                    <span>{{property.agency.title}}</span>
+                </div>
+                <span class="price" ng-bind-html="property.price | euro"></span>
+            </div>
+        </div>
+    </div>
+</section>

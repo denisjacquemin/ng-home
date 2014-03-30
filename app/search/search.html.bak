@@ -1,0 +1,52 @@
+
+<section id="search" ng-hide="showModal">
+    <header id="header" >
+        <form  ng-submit="doSearch(location)">
+            <div class="search-container">
+                <input ngAutocomplete type="search" placeholder="Where?" ng-model="location">
+            </div>
+            <input type="submit" value="Chercher">
+        </form>
+        <nav>
+            <ol>
+                <li><a href="/pro">Acces Pro</a></li>
+            </ol>
+        </nav>
+    </header>
+    <section id="content">
+        <header>
+            <form>
+                <div>
+                    <label>Chambres</label>
+                    <select></select>
+                </div>
+                <div id="price-range"></div>
+            </form>
+        </header>
+        <results show="showProperty(index)" results="results"></results>
+    </section>
+</section>
+<section id="modal" ng-show="showModal">
+    <header class="head">
+        <div class="inner">
+            <div class="img-container"><img ng-src="assets/img/properties/{{property.id}}/{{property.images[0]}}"></div>
+            <a herf="#" class="price" ng-bind-html="property.price | euro"></a>
+
+        </div>
+    </header>
+
+    <section class="info">
+        <h1 class="info-title">{{property.title}}</h1>
+        <section class="info-highlight">
+            <ul>
+                <li>3 chambres</li>
+                <li>1 piscine</li>
+                <li>200m2</li>
+            </ul>
+        </section>
+        <p class="info-desc">
+            {{property.description}}
+            <nav><span ng-click="backToSearch()">Back to Search</span></nav>
+        </p>
+    </section>
+</section>
