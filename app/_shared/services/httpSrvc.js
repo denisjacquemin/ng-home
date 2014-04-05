@@ -53,7 +53,7 @@ app.service("HttpSrvc", function ($http, $q, $sce) {
             );
             return deferred.promise;
         },
-        myJSONP: function(url, config) {
+        myJSONP: function(url, config) { // + '?callback=JSON_CALLBACK'
             var deferred = $q.defer();
             $http.jsonp(url, config).then(
                 function successCallBack(result) {

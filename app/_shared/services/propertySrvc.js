@@ -7,7 +7,17 @@ app.service("PropertySrvc", function (HttpSrvc) {
 
     return {
         loadProperties: function (queryString) {
-            return HttpSrvc.myJSONP("http://localhost:4000/API/v1/" + queryString + '?callback=JSON_CALLBACK').then(
+            return HttpSrvc.myGet("http://localhost:5000/API/v1/" + queryString).then(
+                function (data) {
+                    return data;
+                },
+                function (reason) {
+                    return [];
+                }
+            );
+        },
+        getByGeo: function (lon, lat) {
+            return HttpSrvc.myGet("http://localhost:5000/API/v1/geo?lon=" + lon + '&lat=' + lat).then(
                 function (data) {
                     return data;
                 },
@@ -16,6 +26,7 @@ app.service("PropertySrvc", function (HttpSrvc) {
                 }
             );
         }
+
     };
 
 

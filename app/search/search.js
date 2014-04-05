@@ -7,28 +7,39 @@ angular.module('app.search', [
     'ui.router'
 ]).config(function ($stateProvider) {
 
+    //var urlMatcher = $urlMatcherFactory.compile("/");
 
     $stateProvider
 
-        .state('home', {
-            url: '/',
+        .state('root', {
+            url: "/",
+            data:  {
+
+                lon: 50.8333,
+                lat: 4
+            },
             views: {
                 'search': {
                     templateUrl: 'search/search.html',
                     resolve: {
-                        querylocation: function ($stateParams) {
-                            return $stateParams.city;
+                        location: function (LocationSrvc) {
+                            return LocationSrvc.currentLocationFromIP();
                         }
                     },
-                    controller: ['$scope', '$state', '$location', 'Query', 'querylocation',
-                        function ($scope, $state, $location, Query, querylocation) {
-                            $scope.query = Query;
-                            $scope.query.location = querylocation;
+                    controller: ['$scope', '$state', 'location',
+                        function ($scope, $state, location) {
+                            $scope.form = {
+                                location: location,
+                                lon: $state.current.data.lon,
+                                lat: $state.current.data.lat
+                            };
 
-                            $scope.doSearch = function (querystring) {
-                                console.log('doSearch in home ' + querystring);
-                                //$location.path(querystring);
-                                $state.go('search', {city: $scope.query.location});
+                            $scope.doSearch = function (location, lon, lat) {
+                                console.log('doSearch in home ' + location + ', ' + lon + ', ' + lat);
+                                $state.current.data.location = location;
+                                $state.current.data.lon = lon;
+                                $state.current.data.lat = lat;
+                                $state.transitionTo('root.search', {city: $state.current.data.location});
                             };
                         }]
                 },
@@ -36,9 +47,9 @@ angular.module('app.search', [
                     templateUrl: 'properties/properties.html',
                     resolve: {
                         showProperties: function () { return true; },
-                        initProperties: function (PropertySrvc, $stateParams) {
-                            console.log('initProperties with ' + 'nothing');
-                            return [];
+                        initProperties: function (PropertySrvc) {
+                            console.log('initProperties with ' + this.data.location);
+                            return PropertySrvc.getByGeo(this.data.lon, this.data.lat);
                         }
                     },
                     controller: [
@@ -62,8 +73,9 @@ angular.module('app.search', [
                 },
                 'property': {
                     templateUrl: 'property/property.html',
-                    resolve: {
-                        showProperty: function () { return false; }
+                    controller: function ($scope, $state) {
+
+                        $scope.showProperty = false;
                     }
                 },
                 'map': {
@@ -73,67 +85,71 @@ angular.module('app.search', [
         })
 
 
-        .state('search', {
+        .state('root.search', {
             url: '/:city',
+
             views: {
                 'search': {
                     templateUrl: 'search/search.html',
-                    resolve: {
-                        querylocation: function ($stateParams) {
-                            return $stateParams.city;
-                        }
-                    },
-                    controller: ['$scope', '$state', '$location', 'Query', 'querylocation',
-                        function ($scope, $state, $location, Query, querylocation) {
-                            $scope.query = Query;
-                            $scope.query.location = querylocation;
 
-                            $scope.doSearch = function (querystring) {
-                                console.log('doSearch in home ' + querystring);
-                                //$location.path(querystring);
-                                $state.go('search', {city: $scope.query.location});
+                    controller: ['$scope', '$state', '$location', 'Query', 'querylocation',
+
+                        function ($scope, $state, $stateParams) {
+                            console.log('In root.search.views.search.controller');
+                            $scope.rootSearch = function () {};
+
+                            $scope.doSearch = function (location, lon, lat) {
+                                console.log('doSearch in home ' + location + ', ' + lon + ', ' + lat);
+                                $state.current.data.location = location;
+                                $state.current.data.lon = lon;
+                                $state.current.data.lat = lat;
+                                $state.go('root.search', {city: $state.current.data.location});
                             };
                         }]
                 },
                 'properties': {
-                    templateUrl: 'properties/properties.html',
-                    resolve: {
-                        showProperties: function () { return true; },
-                        initProperties: function (PropertySrvc, $stateParams) {
-                            console.log('initProperties with ' + $stateParams.city);
-                            return PropertySrvc.loadProperties($stateParams.city);
-                        }
-                    },
-                    controller: [
-                        '$scope',
-                        'Results',
-                        'initProperties',
-                        'showProperties',
-
-                        function (
-                            $scope,
-                            Results,
-                            initProperties,
-                            showProperties
-                            ) {
-
-                            $scope.results = Results;
-                            $scope.results.properties = initProperties;
-                            $scope.showProperties = showProperties;
-
-                        }]
+                    template: "<p>properties</p>"//'properties/properties.html',
+//                    resolve: {
+//                        showProperties: function () { return true; },
+//                        initProperties: function (PropertySrvc, Query) {
+//                            console.log('initProperties with ' + Query.location);
+//                            // get lon and lat of city
+//                            // then call PropertySrvc.getByGeo function
+//
+//                            return PropertySrvc.loadProperties(Query.location);
+//                        }
+//                    },
+//                    controller: [
+//                        '$scope',
+//                        'Results',
+//                        'initProperties',
+//                        'showProperties',
+//
+//                        function (
+//                            $scope,
+//                            Results,
+//                            initProperties,
+//                            showProperties
+//                        ) {
+//
+//                            $scope.results = Results;
+//                            $scope.results.properties = initProperties;
+//                            $scope.showProperties = showProperties;
+//
+//                        }]
                 },
                 'property': {
                     templateUrl: 'property/property.html',
-                    resolve: {
-                        showProperty: function () { return false; }
+                    controller: function ($scope) {
+
+                        $scope.showProperty = false;
                     }
                 },
                 'map': {
                     templateUrl: 'map/map.html'
                 }
             }
-        })
+        });
 
 });
 

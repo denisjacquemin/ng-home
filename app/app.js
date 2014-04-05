@@ -3,7 +3,7 @@
 var app = angular.module('app', [
     'ui.router',
     'ngSanitize',
-    'google-maps',
+    //'google-maps',
     'ngAutocomplete',
     'app.search',
     'app.property',
