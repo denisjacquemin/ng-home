@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title ng-bind="$state.current.name + ' - ui-router'">ui-router</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/assets/css/styles.css">
+    <!--
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,400' rel='stylesheet' type='text/css'>
+    -->
+    <style>
+        [ng-cloak] { display:none; }
+    </style>
+</head>
+<body ng-cloak class="ng-cloak">
+
+    <ui-view name="search">search here</ui-view>
+    <ui-view name="properties">properties here</ui-view>
+    <ui-view name="property">property here</ui-view>
+    <ui-view name="map">map here</ui-view>
+
+
+	<script src="/assets/js/vendor/jquery2/jquery2.min.js"></script>
+	<script src="/assets/js/vendor/angularjs/angular.js"></script>
+	<script src="/assets/js/vendor/angularjs/angular-ui-router.min.js"></script>
+    <script src="/assets/js/vendor/angularjs/angular-sanitize.min.js"></script>
+	<script src="/assets/js/vendor/underscorejs/underscore-min.js"></script>
+    <!--
+    <script src='//maps.googleapis.com/maps/api/js?sensor=false&libraries=places&sensor=false'></script>
+
+    <script src='assets/js/vendor/angular-google-maps.min.js'></script>
+    -->
+    <script src='/assets/js/vendor/ngAutocomplete.js'></script>
+
+    <script src="/app.js"></script>
+    <script src="/_shared/factories/query.js"></script>
+    <script src="/_shared/factories/results.js"></script>
+    <script src="/_shared/factories/property.js"></script>
+    <script src="/_shared/services/httpSrvc.js"></script>
+    <script src="/_shared/services/propertySrvc.js"></script>
+    <script src="/_shared/services/locationSrvc.js"></script>
+    <script src="/_shared/directives/search.js"></script>
+    <script src="/_shared/directives/results.js"></script>
+    <script src="/_shared/directives/googlePlaces.js"></script>
+    <script src="/_shared/filters/euroFilter.js"></script>
+    <script src="/search/search.js"></script>
+    <script src="/property/property.js"></script>
+    <script src="/properties/properties.js"></script>
+    <script src="/map/mapCtrl.js"></script>
+</body>
+</html>

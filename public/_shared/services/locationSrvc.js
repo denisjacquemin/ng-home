@@ -15,6 +15,16 @@ app.service("LocationSrvc", function (HttpSrvc) {
                     return "no response";
                 }
             );
+        },
+        locateCity: function (city) {
+            return HttpSrvc.myGet("http://localhost:5000/API/v1/lonlat/" + city).then(
+                function (data) {
+                    return data;
+                },
+                function (reason) {
+                    return "no response";
+                }
+            );
         }
     };
 

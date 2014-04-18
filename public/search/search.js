@@ -7,13 +7,12 @@ angular.module('app.search', [
     'ui.router'
 ]).config(function ($stateProvider, $urlMatcherFactoryProvider) {
 
-    //var urlMatcher = $urlMatcherFactory.compile("/");
     var urlMatcher = $urlMatcherFactoryProvider.compile("/.*");
 
     $stateProvider
 
-        .state('root', {
-            url: '/{city:.*}',
+        .state('search', {
+            url: '/:city', // '/{city:.*}'
             data:  {
 
                 lon: 50.8333,
@@ -40,7 +39,7 @@ angular.module('app.search', [
                                 $state.current.data.location = location;
                                 $state.current.data.lon = lon;
                                 $state.current.data.lat = lat;
-                                $state.transitionTo('root.search', {city: $state.current.data.location});
+                                $state.transitionTo('search', {city: $state.current.data.location});
                             };
                         }]
                 },
@@ -48,8 +47,10 @@ angular.module('app.search', [
                     templateUrl: 'properties/properties.html',
                     resolve: {
                         showProperties: function () { return true; },
-                        initProperties: function (PropertySrvc) {
-                            console.log('initProperties with ' + this.data.location);
+                        initProperties: function ($state, PropertySrvc, LocationSrvc) {
+                            var lonlat = LocationSrvc.locateCity($state.current.location);
+                            $state.current.data.lon = lonlat.lng;
+                            $state.current.data.lat = lonlat.lat;
                             return PropertySrvc.getByGeo(this.data.lon, this.data.lat);
                         }
                     },

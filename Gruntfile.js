@@ -19,30 +19,30 @@ module.exports = function (grunt) {
             },
             prodApp: {
                 options: {
-                    script: 'path/to/prod/server.js',
+                    script: 'path/to/prod/apiserver.js',
                     node_env: 'production'
                 }
             },
             testApp: {
                 options: {
-                    script: 'path/to/test/server.js'
+                    script: 'path/to/test/apiserver.js'
                 }
             },
             devAPI: {
                 options: {
-                    script: '../API/server.js'
+                    script: '../API/apiserver.js'
                     //script: 'testing/stubbedserver/stubbedserver.js'
                 }
             },
             prodAPI: {
                 options: {
-                    script: 'path/to/prod/server.js',
+                    script: 'path/to/prod/apiserver.js',
                     node_env: 'production'
                 }
             },
             testAPI: {
                 options: {
-                    script: 'path/to/test/server.js'
+                    script: 'path/to/test/apiserver.js'
                 }
             }
         },

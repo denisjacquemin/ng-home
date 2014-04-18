@@ -1,0 +1,23 @@
+body {
+    margin:0;
+    padding:0;
+}
+
+.c img {
+
+    /* Set up proportionate scaling */
+    width: 100%;
+    height: auto;
+}
+
+form input[type='text'] {
+    position: fixed;
+    top: 20px;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+    border-radius: 0;
+    height: 40px;
+    font-size: 18px;
+    outline: none;
+}
