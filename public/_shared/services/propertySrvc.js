@@ -17,14 +17,7 @@ app.service("PropertySrvc", function (HttpSrvc) {
             );
         },
         getByGeo: function (lon, lat) {
-            return HttpSrvc.myGet("http://localhost:5000/API/v1/geo?lon=" + lon + '&lat=' + lat).then(
-                function (data) {
-                    return data;
-                },
-                function (reason) {
-                    return [];
-                }
-            );
+            return HttpSrvc.myGet("http://localhost:5000/API/v1/geo?lon=" + lon + '&lat=' + lat);
         }
 
     };

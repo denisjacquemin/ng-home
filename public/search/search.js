@@ -13,11 +13,6 @@ angular.module('app.search', [
 
         .state('search', {
             url: '/:city', // '/{city:.*}'
-            data:  {
-
-                lon: 50.8333,
-                lat: 4
-            },
             views: {
                 'search': {
                     templateUrl: 'search/search.html',
@@ -30,16 +25,13 @@ angular.module('app.search', [
                         function ($scope, $state, location) {
                             $scope.form = {
                                 location: location,
-                                lon: $state.current.data.lon,
-                                lat: $state.current.data.lat
                             };
 
                             $scope.doSearch = function (location, lon, lat) {
                                 console.log('doSearch in home ' + location + ', ' + lon + ', ' + lat);
-                                $state.current.data.location = location;
-                                $state.current.data.lon = lon;
-                                $state.current.data.lat = lat;
-                                $state.transitionTo('search', {city: $state.current.data.location});
+
+
+                                $state.transitionTo('search', {city: location});
                             };
                         }]
                 },
@@ -47,28 +39,42 @@ angular.module('app.search', [
                     templateUrl: 'properties/properties.html',
                     resolve: {
                         showProperties: function () { return true; },
-                        initProperties: function ($state, PropertySrvc, LocationSrvc) {
-                            var lonlat = LocationSrvc.locateCity($state.current.location);
-                            $state.current.data.lon = lonlat.lng;
-                            $state.current.data.lat = lonlat.lat;
-                            return PropertySrvc.getByGeo(this.data.lon, this.data.lat);
+
+                        properties: function ($stateParams, PropertySrvc, LocationSrvc) {
+                            return LocationSrvc.locateCity($stateParams.city).then(
+                                function (lonlat) {
+                                    return PropertySrvc.getByGeo(lonlat.lng, lonlat.lat).then(
+                                        function (data) {
+                                            console.log('found ' + data.length + 'results');
+                                            return data;
+                                        },
+                                        function (reason) {
+                                            return [];
+                                        }
+                                    );
+                                },
+                                function (reason) {
+                                    return "no response";
+                                }
+                            );
+
                         }
                     },
                     controller: [
                         '$scope',
                         'Results',
-                        'initProperties',
+                        'properties',
                         'showProperties',
 
                         function (
                             $scope,
                             Results,
-                            initProperties,
+                            properties,
                             showProperties
-                            ) {
-
+                        ) {
+                            console.log('instantiate controller');
                             $scope.results = Results;
-                            $scope.results.properties = initProperties;
+                            $scope.results.properties = properties;
                             $scope.showProperties = showProperties;
 
                         }]
