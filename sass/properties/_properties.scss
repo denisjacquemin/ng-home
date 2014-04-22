@@ -18,7 +18,7 @@ section#properties {
   .item {
     width:100%;
     .inner {
-      margin: 0 10px 20px 10px;
+      margin: 0 0 20px 0;
       //height: 200px;
       position:relative;
       background-color: white;
@@ -68,6 +68,7 @@ section#properties {
           text-rendering: optimizelegibility;
           font-weight: bold;
           -webkit-font-smoothing: antialiased;
+          text-decoration: underline;
         }
 
       }
