@@ -138,3 +138,39 @@ section#property {
   bottom: 0;
   left: 0;
   right: 0; }
+
+section#map {
+  display: none; }
+
+@media screen and (min-width: 568px) {
+  section#properties .item {
+    width: 50%;
+    float: left; }
+    section#properties .item .inner {
+      margin: 0 4px 20px 4px; } }
+@media screen and (min-width: 1024px) {
+  section#properties {
+    left: 50%;
+    z-index: 100; }
+    section#properties .item {
+      width: 100%; }
+      section#properties .item .inner {
+        margin: 0 0 20px 0; } }
+@media screen and (min-width: 1140px) {
+  section#properties .item {
+    width: 50%; }
+    section#properties .item .inner {
+      margin: 0 4px 20px 4px; } }
+@media screen and (min-width: 1024px) {
+  section#map {
+    display: block;
+    background: #ffdddd;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; } }
+@media screen and (min-width: 1024px) {
+  section#search {
+    z-index: 110;
+    right: 50%; } }
