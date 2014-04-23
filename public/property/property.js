@@ -9,24 +9,39 @@ angular.module('app.property', [
 
     $stateProvider
 
-        .state('app.property', {
-            url: 'property', // should be :city/:urlid
+        .state('property', {
+            url: '/p/:urlid', // '/{city:.*}'
             views: {
-                'property@': {
-                    templateUrl: 'property/property.html'
+                'search': {
+                    templateUrl: 'search/search.html',
+
+                    controller: function ($scope) {
+                        $scope.showSearch = false;
+                    }
+                },
+                'properties': {
+                    templateUrl: 'properties/properties.html',
+                    controller: [
+                        '$scope',
+                        function (
+                            $scope
+                        ) {
+                            console.log('instantiate controller in property');
+                            $scope.showProperties = false;
+
+                        }]
+                },
+                'property': {
+                    templateUrl: 'property/property.html',
+                    controller: function ($scope, $state) {
+
+                        $scope.showProperty = true;
+                    }
+                },
+                'map': {
+                    templateUrl: 'map/map.html'
                 }
-            },
-            controller: ['$scope', 'showProperty',
-
-                function (
-                    $scope,
-                    showProperty
-                ) {
-
-                    $scope.showProperty = showProperty;
-
-                }]
-
+            }
         });
 
 });

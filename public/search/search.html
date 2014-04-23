@@ -1,4 +1,4 @@
-<section id="search" ng-submit="doSearch(form.location, form.lon, form.lat)">
+<section id="search" ng-submit="doSearch(form.location, form.lon, form.lat)" ng-show="showSearch">
     <form>
         <div class="search-container">
             <input ngAutocomplete type="search" placeholder="Where?" ng-model="form.location">

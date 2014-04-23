@@ -27,6 +27,7 @@ angular.module('app.search', [
                     },
                     controller: ['$scope', '$state', 'location',
                         function ($scope, $state, location) {
+                            $scope.showSearch = true;
                             $scope.form = {
                                 location: location,
                                 lon: '50.19905',

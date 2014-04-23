@@ -6,6 +6,15 @@ var appProperties = angular.module('app.properties', [
     'ui.router'
 ]).config(function ($stateProvider) {
 
+    $stateProvider
+
+        .state('properties', {
+           abstract: true,
+           url: 'properties',
+           templateUrl: 'properties/properties.html',
+           
+        });
+
 
 
 });

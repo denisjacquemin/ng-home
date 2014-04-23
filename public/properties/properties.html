@@ -5,9 +5,9 @@
     <div class="item" ng-repeat="property in results.properties" >
         <div class="inner">
             <div class="img-container"><img ng-src="assets/img/properties/{{property.id}}/{{property.images[0]}}"></div>
-            <div class="info" ui-sref="app.property">
+            <div class="info" ui-sref="property({urlid:property.urlid})">
                 <span class="title">{{property.title}}</span>
-                </div>
+            </div>
             <div class="details">
                 <div class="agency">
                     <img ng-src="assets/img/agencies/{{property.agency.id}}/{{property.agency.logo}}" height="30px" alt="{{property.agency.title}}">
